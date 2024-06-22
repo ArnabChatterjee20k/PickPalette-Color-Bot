@@ -69,9 +69,8 @@ Rules:
 - Do not invent, modify, or suggest any colors not explicitly listed in the input data.
 - If the description doesn't match any palette well, choose the closest approximation from the available colors.
 - Ensure all suggested colors are exact matches to those in the input data.
-- output should be in json
 
-json Output format:
+Output format:
 {{"palette": ["color1", "color2", ...]}}
 
 Before responding, double-check that all colors in your suggested palette appear in the original input data.
@@ -96,7 +95,7 @@ Rules:
 - You may use a color multiple times within a palette if it's particularly suitable for the description.
 - Try to make each of the 5 palettes distinct from one another.
 
-JSON Output format:
+Output format:
 {{
   "palette":[
         ["color1", "color2", ...],

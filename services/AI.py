@@ -3,19 +3,18 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain.chains.sequential import SimpleSequentialChain
 from services.templates import template_for_multiple_palettes , template_single_best_palette ,template_single_best_palette_color_theory,template_for_multiple_palettes_color_theory
-
+from services.Parsers import PaletteParser
 model = "gemini-pro"
 class AI:
     def __init__(self):
         self.model = ChatGoogleGenerativeAI(model=model)
-
+        self.parser = JsonOutputParser(pydantic_object=PaletteParser)
     def _generate_multiple_palette_chain(self,description,app_descpriptions):
         template = template_for_multiple_palettes_color_theory
 
         prompt = PromptTemplate.from_template(template=template)
 
-        parser = JsonOutputParser()
-        chain = prompt | self.model | parser
+        chain = prompt | self.model | self.parser
         return chain.invoke({"description":description,"info":app_descpriptions})
 
     def _generate_best_palette_chain(self,description,palettes):
@@ -23,8 +22,7 @@ class AI:
 
         prompt = PromptTemplate.from_template(template=template)
 
-        parser = JsonOutputParser()
-        chain = prompt | self.model | parser
+        chain = prompt | self.model | self.parser
         return chain.invoke({"description":description,"info":palettes})
 
     def chat(self,app_descpriptions:str,description:str):

@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 import discord
 from discord import Message,GroupChannel
+from utils.ai_chat import ai_chat
 
 load_dotenv(".env")
 
@@ -20,7 +21,11 @@ async def on_ready():
 async def on_message(message:Message):
     if message.author == client.user:
         return
-    if client.user in message.mentions:
-        await message.reply("hey master")
+    # if client.user in message.mentions:
+    #     await message.reply("hey master")
+
+    palettes = ai_chat(message.content)
+    await message.reply(str(palettes))
+
 TOKEN = os.environ.get("TOKEN")
 client.run(token=TOKEN)
